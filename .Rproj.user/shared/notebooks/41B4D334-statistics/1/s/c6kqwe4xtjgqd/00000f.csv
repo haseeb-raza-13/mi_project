@@ -1,0 +1,2 @@
+"0","pre_treatment <- rnorm(n=2000, mean = 160, sd=15)"
+"0","post_treatment <- rnorm(n= 2000, mean = 120, sd =15)"

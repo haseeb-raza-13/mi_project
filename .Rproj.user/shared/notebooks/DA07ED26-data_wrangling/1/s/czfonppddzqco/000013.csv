@@ -1,0 +1,43 @@
+"0"," df_test %>%
+  filter(!is.na(df_test$theileriosis_freq)) %>%  
+  mutate(theileriosis_freq = recode(theileriosis_freq,
+                                    ""1"" = ""Less frequent"",
+                                    ""2"" =  ""Seldom"",
+                                    ""3"" = ""Highly frequent""))
+"
+"1","[38;5;246m# A tibble: 1,221 × 20[39m
+"
+"1","   date       gender educational_status   ocupation_type  sec   dist_name tehsil_name living_area tick_freq
+"
+"1","   [3m[38;5;246m<date>[39m[23m     [3m[38;5;246m<chr>[39m[23m  [3m[38;5;246m<chr>[39m[23m                [3m[38;5;246m<chr>[39m[23m           [3m[38;5;246m<chr>[39m[23m [3m[38;5;246m<chr>[39m[23m     [3m[38;5;246m<chr>[39m[23m       [3m[38;5;246m<chr>[39m[23m           [3m[38;5;246m<dbl>[39m[23m
+"
+"1","[38;5;250m 1[39m 2024-05-14 Male   Postgraduated        Government Emp… Midd… Faisalab… Faisalabad  Urban              10
+"
+"1","[38;5;250m 2[39m 2024-05-14 Male   Postgraduated        Student         Midd… Faisalab… Fsd sadar   Rural               6
+"
+"1","[38;5;250m 3[39m 2024-05-15 Male   Postgraduated        Government Emp… Midd… Narowal   Shakergarh  Rural              10
+"
+"1","[38;5;250m 4[39m 2024-05-15 Male   Graduated            Government Emp… Midd… Rajanpur  Jampur      Urban               3
+"
+"1","[38;5;250m 5[39m 2024-05-15 Male   Graduated            Student         Midd… Kasur     Kasur       Rural               6
+"
+"1","[38;5;250m 6[39m 2024-05-15 Male   Postgraduated        Private Employ  Midd… Bahawalp… Bahawalpur  Peri Urban          7
+"
+"1","[38;5;250m 7[39m 2024-05-15 Male   Intermediate (11-12) Student         Midd… Narowal   Narowal     Urban               6
+"
+"1","[38;5;250m 8[39m 2024-05-15 Male   Intermediate (11-12) Student         Midd… Gujranwa… Wazirabad   Rural               6
+"
+"1","[38;5;250m 9[39m 2024-05-16 Male   Graduated            Self Business   Midd… Muzaffar… Kotadu      Urban               7
+"
+"1","[38;5;250m10[39m 2024-05-16 Male   Postgraduated        Self Business   Uppe… Toba Tek… Gojra       Urban               8
+"
+"1","[38;5;246m# ℹ 1,211 more rows[39m
+"
+"1","[38;5;246m# ℹ 11 more variables: host_animal <chr>, host_specie <chr>, animal_gender <chr>, host_health <chr>,[39m
+"
+"1","[38;5;246m#   knowledge <chr>, obs_freq <chr>, impact_ani_health <chr>, ave_tick_ly <chr>, hm <chr>,[39m
+"
+"1","[38;5;246m#   theileriosis_freq <chr>, babesiosis_freq <chr>[39m
+"
+"1","[38;5;246m# ℹ Use `print(n = ...)` to see more rows[39m
+"

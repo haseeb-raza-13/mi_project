@@ -1,0 +1,8 @@
+"0","zone_info_data <- zone_info_data %>% "
+"0","  rename( ""farm_location"" = ""2. Farm Location:"","
+"0","          ""zones"" = ""Zones"", "
+"0","          ""edu_farmer"" = ""4.Education of farmer?"", "
+"0","          ""years_in_business"" = ""5.For how many years you are in this business?"", "
+"0","          ""pref_breed"" = ""6.Which preferable breed of  goat do you have?"")"
+"0",""
+"0",""

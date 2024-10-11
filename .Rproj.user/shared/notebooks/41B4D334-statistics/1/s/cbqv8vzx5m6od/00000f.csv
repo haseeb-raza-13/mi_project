@@ -1,0 +1,6 @@
+"0","mpg <- mpg"
+"0",""
+"0",""
+"0","corr <- mpg %>%  select(., displ, cyl, cty, hwy) %>% "
+"0","  cor() "
+"0",""

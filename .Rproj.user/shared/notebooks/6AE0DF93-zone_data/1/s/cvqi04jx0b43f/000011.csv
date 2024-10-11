@@ -1,0 +1,5 @@
+"0","library(tidyverse)"
+"0","library(ggplot2)"
+"0"," heatmap_1 %>% "
+"0","  pivot_longer(cols = -farm_location, names_to = ""variables"" , values_to = ""values"") %>% "
+"0","  ggplot(aes(farm_location, variables, fill = values)) + geom_tile() + scale_color_gradient(low = ""yellow"", high = ""red"")"

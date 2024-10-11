@@ -1,0 +1,211 @@
+---
+title: "Data Wrangling Part 2"
+author: "Haseeb Raza"
+date: "2024-09-09"
+output: html_document
+---
+# Importing Data Set from Google Sheets
+
+```{r importing_data_set, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(readxl)
+library(googlesheets4)
+library(tidyverse)
+library(ggplot2)
+
+auction_data <- read_sheet("https://docs.google.com/spreadsheets/d/1_quMjJRBHDLQSmWQouzzyi1DOejAtCZnAeesdVyRWiQ/edit#gid=1467293328",
+		sheet="numbers_and_prices",
+		range="A:J",
+		col_type = "Ddcccccccc",
+		na="NA") %>%
+	rename_all(tolower) %>%
+	rename("aged_sheep" = "aged sheep",
+		"feeder_lambs" = "feeder lambs",
+		"hair_lambs" = "hair lambs",
+		"new_crop" = "new crop",
+		"small" = "40-85",
+		"medium" = "85-105",
+		"large" = "106-130",
+		"extra_large" = ">131")
+```
+
+
+# Selecting Large lamb Data and Separting Column into "min" & "max"
+
+```{r large_lamb, message=FALSE, warning=FALSE, paged.print=FALSE}
+large_prices <- auction_data %>%
+	separate(large, sep="-", into=c("min", "max"), convert=TRUE) %>%
+	select(date, min, max)
+```
+
+
+```{r}
+library(tidyverse)
+
+large_prices %>%
+	mutate(mid_point = (min + max) / 2) %>%
+	ggplot(aes(x=date, y=mid_point)) +
+		geom_line(color="steelblue") +
+		geom_smooth(span=0.1, se=FALSE, col = "#2234CA") +
+		labs(title="Large lambs have their\nhighest value in April and May",
+			subtitle="Prices for lambs between 106 and 130 pounds",
+			caption="Data as reported by United Producers in Manchester, MI",
+			x="Date",
+			y="Price ($/100 lbs)") +
+		theme_light()
+
+
+```
+
+# Tidying Data 
+
+```{r tidying_data, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+
+auction_data %>%
+	pivot_longer(cols = -c(date,total,aged_sheep,feeder_lambs,hair_lambs,new_crop), names_to="classes", values_to="price_range")
+```
+
+
+```{r}
+
+tidy_auction_data <- auction_data %>%
+	pivot_longer(cols = -c(date, total), names_to="classes", values_to="price_range") %>%
+	separate(price_range, sep="-", into=c("min", "max"), convert=TRUE) %>%
+	mutate(midpoint = (min + max) / 2)
+
+
+```
+
+```{r}
+tidy_auction_data %>%
+	filter(classes == "small" | classes == "medium" | classes == "large" | classes == "extra_large") %>%
+	ggplot(aes(x=date, y=midpoint, color=classes)) +
+		geom_line()
+```
+
+
+```{r}
+
+tidy_auction_data %>%
+	filter(classes == "small" | classes == "medium" | classes == "large" | classes == "extra_large") %>%
+	ggplot(aes(x=date, y=midpoint, color=classes))  + 
+  geom_smooth(span=0.1, se=FALSE) +
+		labs(title="Small lambs have the highest price, but\nall lambs peak in Spring",
+			x="Date",
+			y="Price ($/100 lbs)",
+			caption="Data from United Producers in Manchester, MI") +
+		theme_light()
+
+```
+```{r}
+tidy_auction_data %>%
+	filter(classes == "small" | classes == "medium" | classes == "large" | classes == "extra_large") %>%
+	ggplot(aes(x=date, y=midpoint, fill= classes)) + geom_bar(stat = "identity")
+```
+
+
+
+
+
+
+
+```{r rolling_ave, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(tidyverse)
+
+
+tidy_auction_data %>%
+	filter(classes=="large") %>%
+	mutate(lag0 = midpoint ,
+
+
+		lag1 = lag(midpoint, 1, order_by=date))
+
+```
+
+
+
+
+
+```{r}
+library(tidyverse)
+tidy_auction_data %>%
+	filter(classes=="large") %>%
+	mutate(lag0 = midpoint,
+		lag1 = lag(midpoint, 1, order_by=date),
+		lag2 = lag(midpoint, 2, order_by=date),
+		lag3 = lag(midpoint, 3, order_by=date))
+```
+
+
+
+
+
+
+```{r}
+library(tidyverse)
+tidy_auction_data %>%
+	filter(classes=="large") %>%
+	mutate(lag0 = midpoint,
+		lag1 = lag(midpoint, 1, order_by=date),
+		lag2 = lag(midpoint, 2, order_by=date),
+		lag3 = lag(midpoint, 3, order_by=date)) %>%
+	mutate(rolling_average = mean(c(lag0, lag1, lag2, lag3)))
+```
+
+
+
+
+
+```{r}
+
+tidy_auction_data %>%
+	filter(classes=="large") %>%
+	mutate(lag0 = midpoint,
+		lag1 = lag(midpoint, 1, order_by=date),
+		lag2 = lag(midpoint, 2, order_by=date),
+		lag3 = lag(midpoint, 3, order_by=date)) %>%
+	group_by(date) %>%
+	summarize(midpoint = first(midpoint), rolling_average = mean(c(lag0, lag1, lag2, lag3)))
+```
+
+
+```{r}
+large <- tidy_auction_data %>%
+	filter(classes=="large") %>%
+	mutate(lag0 = midpoint,
+		lag1 = lag(midpoint, 1, order_by=date),
+		lag2 = lag(midpoint, 2, order_by=date),
+		lag3 = lag(midpoint, 3, order_by=date)) %>%
+	mutate(rolling_average = (lag0 + lag1 + lag2 + lag3)/4) %>%
+	select(date, midpoint, rolling_average)
+```
+
+
+
+
+
+```{r}
+large %>%
+	pivot_longer(-date, names_to="method", values_to="price")
+
+
+
+large %>%
+	pivot_longer(-date, names_to="method", values_to="price") %>%
+	ggplot(aes(x=date, y=price, color=method)) +
+		geom_line()
+
+
+
+large %>%
+	pivot_longer(-date, names_to="method", values_to="price") %>%
+	ggplot(aes(x=date, y=price, color=method)) +
+		geom_line() +
+		theme_light() +
+		labs(x="Date",
+			y="Price ($/100 lbs)",
+			title="A rolling average smooths the noisiness of the large lamb prices",
+			subtitle="Lagging four week rolling average of the midpoint prices",
+			caption="Prices as reported from United Producers in Manchester, MI")
+```
+

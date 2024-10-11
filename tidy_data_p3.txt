@@ -1,0 +1,151 @@
+library(tidyverse)
+library(googlesheets4)
+
+auction_data <- read_sheet("https://docs.google.com/spreadsheets/d/1_quMjJRBHDLQSmWQouzzyi1DOejAtCZnAeesdVyRWiQ/edit#gid=1467293328",
+		sheet="numbers_and_prices",
+		range="A:J",
+		col_type = "Ddcccccccc",
+		na="NA") %>%
+	rename_all(tolower) %>%
+	rename("aged_sheep" = "aged sheep",
+		"feeder_lambs" = "feeder lambs",
+		"hair_lambs" = "hair lambs",
+		"new_crop" = "new crop",
+		"small" = "40-85",
+		"medium" = "85-105",
+		"large" = "106-130",
+		"extra_large" = ">131")
+
+
+auction_data %>%
+	separate(large, sep="-", into=c("min", "max")) #try running this without the sep argument
+
+
+auction_data %>%
+	separate(large, sep="-", into=c("min", "max"), remove=FALSE, convert=TRUE) %>%
+	select(date, large, min, max)
+
+large_prices <- auction_data %>%
+	separate(large, sep="-", into=c("min", "max"), convert=TRUE) %>%
+	select(date, min, max)
+
+
+large_prices %>%
+	mutate(mid_point = (min + max) / 2)
+
+
+large_prices %>%
+	mutate(mid_point = (min + max) / 2) %>%
+	ggplot(aes(x=date, y=mid_point)) +
+		geom_line()
+
+
+large_prices %>%
+	mutate(mid_point = (min + max) / 2) %>%
+	ggplot(aes(x=date, y=mid_point)) +
+		geom_line() +
+		geom_smooth(span=0.1)
+
+
+large_prices %>%
+	ggplot(aes(x=date, ymin=min, ymax=max)) +
+	geom_ribbon()
+
+
+large_prices %>%
+	ggplot(aes(x=date, ymin=min, ymax=max)) +
+	geom_ribbon(fill="dodgerblue", color="black")
+
+
+
+large_prices %>%
+	ggplot(aes(x=date, ymin=min, ymax=max)) +
+	geom_ribbon(fill="dodgerblue", color="black") +
+	theme_light()
+
+
+
+large_prices %>%
+	ggplot(aes(x=date, ymin=min, ymax=max)) +
+	geom_ribbon(fill="dodgerblue", color="black") +
+	labs(title="main", subtitle="sub", caption="caption", x="x", y="y") +
+	theme_light()
+
+
+large_prices %>%
+	ggplot(aes(x=date, ymin=min, ymax=max)) +
+	geom_ribbon(fill="dodgerblue", color="black") +
+	labs(title="Large lambs have their highest value in April and May",
+			subtitle="Prices for lambs between 106 and 130 pounds",
+			caption="Data as reported by United Producers in Manchester, MI",
+			x="Date",
+			y="Price ($/100 lbs)") +
+	theme_light()
+
+
+
+
+#1 
+
+aged_sheep <- auction_data %>%
+	separate(aged_sheep, sep="-", into=c("min", "max"), convert=TRUE) %>%
+	select(date, min, max) %>%
+	mutate(midpoint = (min+max)/2)
+
+aged_sheep %>%
+	ggplot(aes(x=date, y=midpoint)) +
+		geom_line(color="gray") +
+		geom_smooth(span=0.1, se=FALSE) +
+		labs(title="Aged sheep have their highest value at the beginning of the year",
+				subtitle="Prices for aged sheep",
+				caption="Data as reported by United Producers in Manchester, MI",
+				x="Date",
+				y="Price ($/100 lbs)") +
+		theme_light()
+
+aged_sheep %>%
+	ggplot(aes(x=date, ymin=min, ymax=max)) +
+	geom_ribbon(fill="dodgerblue", color="black") +
+		labs(title="Aged sheep have their highest value at the beginning of the year",
+				subtitle="Prices for aged sheep",
+				caption="Data as reported by United Producers in Manchester, MI",
+				x="Date",
+				y="Price ($/100 lbs)") +
+	theme_light()
+
+#2
+
+large_prices %>%
+	mutate(range = max - min) %>%
+	ggplot(aes(x=date, y=range)) +
+		geom_line(color="gray") +
+		geom_smooth(span=0.1, se=FALSE) +
+			labs(title="Although there's been seasonal variation in large lamb prices, COVID-19 has\nbeen a major perturbation to the lamb market",
+					subtitle="Range of prices for large lambs (106-130 lbs) each week",
+					caption="Data as reported by United Producers in Manchester, MI",
+					x="Date",
+					y="Difference in high and low prices ($/100 lbs)") +
+		theme_light()
+
+
+
+#3
+
+price_difference <- auction_data %>%
+	separate(medium, sep="-", into=c("medium_min", "medium_max"), convert=TRUE) %>%
+	separate(large, sep="-", into=c("large_min", "large_max"), convert=TRUE) %>%
+	mutate(medium_midpoint = (medium_max + medium_min) / 2,
+		large_midpoint = (large_max + large_min) / 2,
+		difference = (large_midpoint * 125 - medium_midpoint * 95)/100) %>%
+	select(date, difference)
+
+price_difference %>%
+	ggplot(aes(x=date, y=difference)) +
+		geom_line(color="gray") +
+		geom_smooth(span=0.1, se=FALSE) +
+		labs(title="Depending on the time of year, it should cost you less than $20 to 50 to convert\na medium lamb to a large lamb (don't sell large lambs in January!)",
+				subtitle="Difference in total price for a 95 and 125 pound lamb since 2015",
+				caption="Data as reported by United Producers in Manchester, MI",
+				x="Date",
+				y="Difference in total price ($/animal)") +
+		theme_light()

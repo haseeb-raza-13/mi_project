@@ -1,0 +1,8 @@
+"0","large <- tidy_auction_data %>%"
+"0","	filter(classes==""large"") %>%"
+"0","	mutate(lag0 = midpoint,"
+"0","		lag1 = lag(midpoint, 1, order_by=date),"
+"0","		lag2 = lag(midpoint, 2, order_by=date),"
+"0","		lag3 = lag(midpoint, 3, order_by=date)) %>%"
+"0","	mutate(rolling_average = (lag0 + lag1 + lag2 + lag3)/4) %>%"
+"0","	select(date, midpoint, rolling_average)"

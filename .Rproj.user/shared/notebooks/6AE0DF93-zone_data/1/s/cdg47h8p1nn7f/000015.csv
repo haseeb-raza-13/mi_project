@@ -1,0 +1,3 @@
+"2","Error in hist.default(zone_data[[col]], main = paste(""Histogram of"", col),  : 
+  'x' must be numeric
+"

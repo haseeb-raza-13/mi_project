@@ -1,0 +1,167 @@
+---
+title: "Statistics in R"
+author: "Haseeb Raza"
+date: "2024-10-01"
+output: html_document
+---
+
+# Relationship between Data Variables 
+
+
+
+## Correlation and Correlation Matrix 
+
+```{r}
+mpg <- mpg
+
+
+corr <- mpg %>%  select(., displ, cyl, cty, hwy) %>% 
+  cor() 
+
+```
+
+
+
+
+```{r}
+library(corrplot)
+
+
+corrplot(corr, method = "number", type = "full")
+
+
+corrplot(corr, method = "shade", type = "full")
+
+
+
+corrplot(corr, method = "circle", type = "upper", order = "hclust", addrect = TRUE )
+
+corrplot.mixed(corr, lower = "circle", upper = "shade")
+```
+
+
+## Regression 
+
+
+```{r}
+mod <- mpg %>%  lm( formula = displ ~ cyl)
+
+
+summary(mod)
+
+```
+
+```{r}
+
+plot(mod, col=2, lwd=1)
+ par(mfrow = c(2,2))
+```
+
+
+
+
+
+
+```{r}
+ggplot(data = mpg, aes(x=cyl, y=displ))+geom_abline(col=2)+
+  geom_point(col="blue")+geom_smooth(se=FALSE, col="green")
+```
+
+
+
+
+
+
+
+```{r}
+plot(mod, col=2, lwd=1)
+
+
+ggplot(data=iris, aes(x=Petal.Length, y=Petal.Width)) +
+  geom_abline(col=2) + geom_point(size=3, col="blue") +
+  geom_smooth(se=FALSE, col="green", span=10) + theme_classic()
+```
+
+
+
+
+
+
+
+# Comparison between Data variables 
+
+
+
+## T-test in R 
+
+### One Sample T-test 
+
+
+```{r one_sample_t, message=FALSE, warning=FALSE, paged.print=FALSE}
+# mpg <-  mpg
+
+t.test(mpg$hwy, mu=30)
+```
+
+
+### Two Sample T-test 
+
+
+
+
+#### Unpaired / Independent T-test 
+
+```{r unpaired_t, message=FALSE, warning=FALSE, paged.print=FALSE}
+t.test(mpg$cty , mpg$hwy)
+
+
+```
+
+
+
+
+#### Paired T-test 
+
+
+```{r}
+pre_treatment <- rnorm(n=2000, mean = 160, sd=15)
+post_treatment <- rnorm(n= 2000, mean = 120, sd =15)
+```
+
+
+```{r}
+
+t.test(pre_treatment, post_treatment, paired = TRUE)
+
+
+```
+
+
+
+
+```{r}
+
+
+if (is.numeric(mpg$hwy)) 
+{
+  print("Highway is a numeric column")
+}
+```
+
+
+```{r}
+if (is.numeric(mpg$manufacturer)) 
+{
+  print("Highway is a numeric column")
+}else {
+  print("Highway is not a numeric column")
+}
+```
+
+
+
+
+
+
+
+

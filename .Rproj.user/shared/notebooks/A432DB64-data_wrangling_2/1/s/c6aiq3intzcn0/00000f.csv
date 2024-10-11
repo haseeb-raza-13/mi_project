@@ -1,0 +1,7 @@
+"0","tidy_auction_data %>%"
+"0","	filter(classes == ""small"" | classes == ""medium"" | classes == ""large"" | classes == ""extra_large"") %>%"
+"0","	ggplot(aes(x=date, y=midpoint, color=classes)) +"
+"0","		geom_line()"
+"2","Warning:"
+"2"," [38;5;255mRemoved 260 rows containing missing values or values outside the scale range (`geom_line()`).[39m
+"

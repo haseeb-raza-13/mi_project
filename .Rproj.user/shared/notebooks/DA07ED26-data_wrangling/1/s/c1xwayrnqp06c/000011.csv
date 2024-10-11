@@ -1,0 +1,56 @@
+"0","library(tidyverse)"
+"0","df_1 <- df_1 %>% rename(""gender"" = ""Gender"", "
+"0","                ""educational_status"" = ""Education Status"","
+"0","                ""ocupation_type"" = ""Occupation type"","
+"0","                ""sec"" = ""Socioeconomic Status"","
+"0","                ""dist_name"" = ""Name of District"","
+"0","                ""tehsil_name"" = ""Name of Tehsil"", "
+"0","                ""living_area"" = ""Living Area"","
+"0","                ""tick_freq"" = ""Based on your observations, how would you rank the ticks in the matter of frequency"","
+"0","                ""host_animal"" = ""In which host you have observed ticks?"" ,"
+"0","                ""host_specie"" = ""If it was animal host then select the host species in which ticks were observed"", "
+"0","                ""animal_gender"" = ""Animal Gender"", "
+"0","                ""host_health"" =  ""Health Status of animal in which ticks are observed (select all possible)"","
+"0","                ""knowledge"" = ""What is your level of knowledge about ticks?"", "
+"0","                ""obs_freq"" = ""How frequently you observe the ticks?"", "
+"0","                ""impact_ani_health"" = ""Did you find any impact of these ticks on animal health?"", "
+"0","                ""ave_tick_ly"" = ""What is the average number of ticks you have observed last year?"","
+"0","                ""hm"" = ""Hygienic Measures of the area (select all possible)"" , "
+"0","                ""theileriosis_freq""= ""How frequently you have observed theileriosis in your animals?"", "
+"0","                ""babesiosis_freq"" =  ""How frequently you have observed babesiosis in animals?"") %>% print()"
+"1","[38;5;246m# A tibble: 1,235 × 19[39m
+"
+"1","   gender educational_status   ocupation_type sec   dist_name tehsil_name living_area tick_freq host_animal
+"
+"1","   [3m[38;5;246m<chr>[39m[23m  [3m[38;5;246m<chr>[39m[23m                [3m[38;5;246m<chr>[39m[23m          [3m[38;5;246m<chr>[39m[23m [3m[38;5;246m<chr>[39m[23m     [3m[38;5;246m<chr>[39m[23m       [3m[38;5;246m<chr>[39m[23m           [3m[38;5;246m<dbl>[39m[23m [3m[38;5;246m<chr>[39m[23m      
+"
+"1","[38;5;250m 1[39m Male   Postgraduated        Government Em… Midd… faisalab… Faisalabad  Urban              10 Domestic A…
+"
+"1","[38;5;250m 2[39m Male   Postgraduated        Student        Midd… Fsd       Fsd sadar   Rural               6 Domestic A…
+"
+"1","[38;5;250m 3[39m Male   Postgraduated        Government Em… Midd… Narowal   Shakergarh  Rural              10 Domestic A…
+"
+"1","[38;5;250m 4[39m Male   Graduated            Government Em… Midd… Rajan pur Jampur      Urban               3 Domestic A…
+"
+"1","[38;5;250m 5[39m Male   Graduated            Student        Midd… Kasur     Kasur       Rural               6 Domestic A…
+"
+"1","[38;5;250m 6[39m Male   Postgraduated        Private Employ Midd… Bahawalp… Bahawalpur  Peri Urban          7 Domestic A…
+"
+"1","[38;5;250m 7[39m Male   Intermediate (11-12) Student        Midd… Narowal   Narowal     Urban               6 Domestic A…
+"
+"1","[38;5;250m 8[39m Male   Intermediate (11-12) Student        Midd… Gujranwa… Wazirabad   Rural               6 Domestic A…
+"
+"1","[38;5;250m 9[39m Male   Graduated            Self Business  Midd… Muzaffar… Kotadu      Urban               7 Domestic A…
+"
+"1","[38;5;250m10[39m Male   Intermediate (11-12) Student        Lowe… Vehari    Vehari      Village             5 Domestic A…
+"
+"1","[38;5;246m# ℹ 1,225 more rows[39m
+"
+"1","[38;5;246m# ℹ 10 more variables: host_specie <chr>, animal_gender <chr>, host_health <chr>, knowledge <chr>,[39m
+"
+"1","[38;5;246m#   obs_freq <chr>, impact_ani_health <chr>, ave_tick_ly <chr>, hm <chr>, theileriosis_freq <chr>,[39m
+"
+"1","[38;5;246m#   babesiosis_freq <chr>[39m
+"
+"1","[38;5;246m# ℹ Use `print(n = ...)` to see more rows[39m
+"

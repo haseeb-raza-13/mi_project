@@ -1,0 +1,5 @@
+"0",""
+"0","for (col in names(zone_data[,-1])) {"
+"0","  # Generate histogram"
+"0","  hist(zone_data[[col]], main = paste(""Histogram of"", col), xlab = col, col = ""steelblue"", border = ""white"")"
+"0","}"

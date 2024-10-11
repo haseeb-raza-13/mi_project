@@ -1,0 +1,14 @@
+"0","large %>%
+	pivot_longer(-date, names_to=""method"", values_to=""price"") %>%
+	ggplot(aes(x=date, y=price, color=method)) +
+		geom_line() +
+		theme_light() +
+		labs(x=""Date"",
+			y=""Price ($/100 lbs)"",
+			title=""A rolling average smooths the noisiness of the large lamb prices"",
+			subtitle=""Lagging four week rolling average of the midpoint prices"",
+			caption=""Prices as reported from United Producers in Manchester, MI"")
+"
+"2","Warning:"
+"2"," [38;5;255mRemoved 97 rows containing missing values or values outside the scale range (`geom_line()`).[39m
+"

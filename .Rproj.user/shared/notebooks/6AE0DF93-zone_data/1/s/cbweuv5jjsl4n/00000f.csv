@@ -1,0 +1,50 @@
+"0","library(tidyverse)"
+"0","zone_info_data %>% "
+"0","  select(., - starts_with(""Vq"")) "
+"1","[38;5;246m# A tibble: 49 × 70[39m
+"
+"1","   `2. Farm Location:` Zones `4.Education of farmer?` 5.For how many years you are in this bu…¹
+"
+"1","   [3m[38;5;246m<chr>[39m[23m               [3m[38;5;246m<dbl>[39m[23m [3m[38;5;246m<chr>[39m[23m                                                        [3m[38;5;246m<dbl>[39m[23m
+"
+"1","[38;5;250m 1[39m Faislabad               8 Illiterate                                                      40
+"
+"1","[38;5;250m 2[39m Faislabad               8 Illiterate                                                      30
+"
+"1","[38;5;250m 3[39m Faislabad               8 Matric                                                           7
+"
+"1","[38;5;250m 4[39m Faislabad               8 Primary                                                         20
+"
+"1","[38;5;250m 5[39m Faislabad               8 Illiterate                                                      50
+"
+"1","[38;5;250m 6[39m BWP                     5 Illiterate                                                      40
+"
+"1","[38;5;250m 7[39m BWP                     5 Graduation                                                      45
+"
+"1","[38;5;250m 8[39m BWP                     5 Illiterate                                                      40
+"
+"1","[38;5;250m 9[39m BWP                     5 Primary                                                         15
+"
+"1","[38;5;250m10[39m BWP                     5 Primary                                                         12
+"
+"1","[38;5;246m# ℹ 39 more rows[39m
+"
+"1","[38;5;246m# ℹ abbreviated name: ¹​`5.For how many years you are in this business?`[39m
+"
+"1","[38;5;246m# ℹ 66 more variables: `6.Which preferable breed of  goat do you have?` <chr>,[39m
+"
+"1","[38;5;246m#   `7. Record Keeping?` <chr>, `8. Record related to` <chr>,[39m
+"
+"1","[38;5;246m#   `9.Do you have separate housing for does/bucks/kids?` <chr>,[39m
+"
+"1","[38;5;246m#   `10. If not separate housing what is the reason?` <chr>, `12. Production System?` <chr>,[39m
+"
+"1","[38;5;246m#   `13. Management system?` <chr>, `22. Housing in winter?` <chr>, …[39m
+"
+"1","[38;5;246m# ℹ Use `print(n = ...)` to see more rows[39m
+"
+"0","# updating zone_info_data"
+"0",""
+"0","zone_info_data <- zone_info_data %>% "
+"0","  select(., - starts_with(""Vq"")) "
+"0",""

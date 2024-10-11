@@ -1,0 +1,3 @@
+"0","zone_info_data <- zone_info_data  %>% filter(farm_location %in% c(""Faislabad"",""BWP"",""Rawalpindi"",""Hafizabad"",  ""Vehari"" ) ) %>% "
+"0","  mutate(farm_location = recode( farm_location, ""Faislabad"" = ""Faisalabad"", "
+"0","                                ""BWP"" = ""Bahawalpur"")) "

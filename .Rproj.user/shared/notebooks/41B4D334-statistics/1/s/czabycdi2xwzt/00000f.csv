@@ -1,0 +1,19 @@
+"0","ggplot(data = mpg, aes(x=cyl, y=displ))+geom_abline(col=2)+"
+"0","  geom_point(col=""blue"")+geom_smooth(se=FALSE, col=""green"")"
+"1","[38;5;255m`geom_smooth()` using method = 'loess' and formula = 'y ~ x'[39m
+"
+"2","Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric,  :"
+"2","
+ "
+"2"," pseudoinverse used at 6
+"
+"2","Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric,  :"
+"2","
+ "
+"2"," neighborhood radius 2
+"
+"2","Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric,  :"
+"2","
+ "
+"2"," reciprocal condition number  6.1061e-16
+"

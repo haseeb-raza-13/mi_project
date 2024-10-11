@@ -1,0 +1,57 @@
+"0","library(tidyverse)"
+"0","# df <- df[,-c(1,2,3)]"
+"0","# select(df, ""Gender"" , ""Education Status"") %>% head()"
+"0",""
+"0","df_1 <- select(df, 'Gender', "
+"0","        'Education Status', "
+"0","        'Occupation type', "
+"0","        'Socioeconomic Status',"
+"0","        'Name of District', "
+"0","        'Name of Tehsil', "
+"0","        'Living Area', "
+"0","        'Based on your observations, how would you rank the ticks in the matter of frequency', "
+"0","       'In which host you have observed ticks?',"
+"0","        'If it was animal host then select the host species in which ticks were observed',"
+"0","        'Animal Gender', "
+"0","        'Health Status of animal in which ticks are observed (select all possible)', "
+"0","        'What is your level of knowledge about ticks?', "
+"0","        'How frequently you observe the ticks?', "
+"0","        'Did you find any impact of these ticks on animal health?', "
+"0","        'What is the average number of ticks you have observed last year?', "
+"0","        'Hygienic Measures of the area (select all possible)',"
+"0","        'How frequently you have observed theileriosis in your animals?',"
+"0","        'How frequently you have observed babesiosis in animals?') "
+"0",""
+"0","head(df)"
+"1","[38;5;246m# A tibble: 6 × 71[39m
+"
+"1","  Timestamp           `Name of respondent`          `Mobile Number` Gender `Age (Years)` `Education Status`
+"
+"1","  [3m[38;5;246m<dttm>[39m[23m              [3m[38;5;246m<chr>[39m[23m                         [3m[38;5;246m<chr>[39m[23m           [3m[38;5;246m<chr>[39m[23m          [3m[38;5;246m<dbl>[39m[23m [3m[38;5;246m<chr>[39m[23m             
+"
+"1","[38;5;250m1[39m 2024-05-14 [38;5;246m10:27:24[39m Arslan Muhammad Ali Khan      03346640852     Male              34 Postgraduated     
+"
+"1","[38;5;250m2[39m 2024-05-14 [38;5;246m11:13:51[39m Faisal HafeeZ                 03071364100     Male              24 Postgraduated     
+"
+"1","[38;5;250m3[39m 2024-05-15 [38;5;246m20:19:13[39m Hafiz Muhammad Zohaib         0301-8576149    Male              24 Postgraduated     
+"
+"1","[38;5;250m4[39m 2024-05-15 [38;5;246m20:35:03[39m Dr.Muhammad Shafeeq Ur rehman 0334-7916654    Male              32 Graduated         
+"
+"1","[38;5;250m5[39m 2024-05-15 [38;5;246m20:44:02[39m Amjad Shah                    03022628543     Male              22 Graduated         
+"
+"1","[38;5;250m6[39m 2024-05-15 [38;5;246m21:34:38[39m Muhammad Usman Nazir          03030890765     Male              29 Postgraduated     
+"
+"1","[38;5;246m# ℹ 65 more variables: `Respondent Occupation` <chr>, `Occupation type` <chr>,[39m
+"
+"1","[38;5;246m#   `Socioeconomic Status` <chr>, `For how many years have you been farming or keeping animals?` <chr>,[39m
+"
+"1","[38;5;246m#   `What is your Annual Income (PKR)` <chr>, `Name of District` <chr>, `Name of Tehsil` <chr>,[39m
+"
+"1","[38;5;246m#   `Name of UC-Name/Village` <chr>, `Living Area` <chr>,[39m
+"
+"1","[38;5;246m#   `Based on your observations, how would you rank the ticks in the matter of frequency` <dbl>,[39m
+"
+"1","[38;5;246m#   `In which host you have observed ticks?` <chr>,[39m
+"
+"1","[38;5;246m#   `If it was animal host then select the host species in which ticks were observed` <chr>, …[39m
+"

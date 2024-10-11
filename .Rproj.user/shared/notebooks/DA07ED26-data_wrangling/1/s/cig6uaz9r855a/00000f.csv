@@ -1,0 +1,49 @@
+"0","library(tidyverse)"
+"0","as.tibble(df)"
+"1","[38;5;246m# A tibble: 1,235 × 71[39m
+"
+"1","   Timestamp           `Name of respondent`          `Mobile Number` Gender `Age (Years)` `Education Status`
+"
+"1","   [3m[38;5;246m<dttm>[39m[23m              [3m[38;5;246m<chr>[39m[23m                         [3m[38;5;246m<chr>[39m[23m           [3m[38;5;246m<chr>[39m[23m          [3m[38;5;246m<dbl>[39m[23m [3m[38;5;246m<chr>[39m[23m             
+"
+"1","[38;5;250m 1[39m 2024-05-14 [38;5;246m10:27:24[39m Arslan Muhammad Ali Khan      03346640852     Male              34 Postgraduated     
+"
+"1","[38;5;250m 2[39m 2024-05-14 [38;5;246m11:13:51[39m Faisal HafeeZ                 03071364100     Male              24 Postgraduated     
+"
+"1","[38;5;250m 3[39m 2024-05-15 [38;5;246m20:19:13[39m Hafiz Muhammad Zohaib         0301-8576149    Male              24 Postgraduated     
+"
+"1","[38;5;250m 4[39m 2024-05-15 [38;5;246m20:35:03[39m Dr.Muhammad Shafeeq Ur rehman 0334-7916654    Male              32 Graduated         
+"
+"1","[38;5;250m 5[39m 2024-05-15 [38;5;246m20:44:02[39m Amjad Shah                    03022628543     Male              22 Graduated         
+"
+"1","[38;5;250m 6[39m 2024-05-15 [38;5;246m21:34:38[39m Muhammad Usman Nazir          03030890765     Male              29 Postgraduated     
+"
+"1","[38;5;250m 7[39m 2024-05-15 [38;5;246m23:28:17[39m Hizqeel Ahmed Muzaffar        03211231783     Male              20 Intermediate (11-…
+"
+"1","[38;5;250m 8[39m 2024-05-15 [38;5;246m23:48:35[39m USAMA IFTIKHAR                03035673115     Male              21 Intermediate (11-…
+"
+"1","[38;5;250m 9[39m 2024-05-16 [38;5;246m07:53:42[39m Muhammad Ishfaq               03471620460     Male              26 Graduated         
+"
+"1","[38;5;250m10[39m 2024-05-16 [38;5;246m08:14:08[39m Mubashar Hanif                03260077937     Male              21 Intermediate (11-…
+"
+"1","[38;5;246m# ℹ 1,225 more rows[39m
+"
+"1","[38;5;246m# ℹ 65 more variables: `Respondent Occupation` <chr>, `Occupation type` <chr>,[39m
+"
+"1","[38;5;246m#   `Socioeconomic Status` <chr>, `For how many years have you been farming or keeping animals?` <chr>,[39m
+"
+"1","[38;5;246m#   `What is your Annual Income (PKR)` <chr>, `Name of District` <chr>, `Name of Tehsil` <chr>,[39m
+"
+"1","[38;5;246m#   `Name of UC-Name/Village` <chr>, `Living Area` <chr>,[39m
+"
+"1","[38;5;246m#   `Based on your observations, how would you rank the ticks in the matter of frequency` <dbl>,[39m
+"
+"1","[38;5;246m#   `In which host you have observed ticks?` <chr>, …[39m
+"
+"1","[38;5;246m# ℹ Use `print(n = ...)` to see more rows[39m
+"
+"0","# head(df)"
+"0","# tail(df)"
+"0","# glimpse(df)"
+"0","# View(df)"
+"0","# summary(df)"

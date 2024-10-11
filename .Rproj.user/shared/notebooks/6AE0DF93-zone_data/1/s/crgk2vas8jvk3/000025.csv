@@ -1,0 +1,5 @@
+"0","library(tidyverse)"
+"0","library(ggplot2)"
+"0","ggplot(data = zone_data, aes(x=per_buck_mating, y=preg_diagnosed_after, size = buck_replacement_freq, posi)) + geom_jitter() + theme_minimal() + geom_smooth(se=FALSE, method = ""lm"", col= ""red"")"
+"1","[38;5;255m`geom_smooth()` using formula = 'y ~ x'[39m
+"

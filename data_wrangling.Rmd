@@ -1,0 +1,464 @@
+---
+title: "Data Wrangling in R"
+author: "Haseeb Raza (Microbiologist | Data Analyst | Bioinformatician)"
+date: "2024-09-03"
+output:
+  html_document: 
+    highlight: zenburn
+  pdf_document: 
+    highlight: zenburn
+---
+# Activating Packages
+
+```{r required_packages, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(readxl)
+library(tidyverse)
+```
+
+In the above code chunk we have activated the packages required for data wrangling/transformation.
+
+# Importing dataset from excel 
+```{r importing_data, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(readxl)
+df <- read_excel("_Participatory Epidemiology of Ticks and Tick-Borne Piroplasmosis along with their Therapeutic and Control Measures_. (Responses).xlsx", 
+    range = "A1:BS1236", col_types = c("date", 
+        "text", "text", "text", "numeric", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "numeric", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text", "text", "text", "text", 
+        "text", "text"))
+```
+
+
+# Understanding the data structure 
+```{r tibble_df, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(tidyverse)
+as.tibble(df)
+# head(df)
+# tail(df)
+# glimpse(df)
+# View(df)
+# summary(df)
+```
+
+# Subsetting Data on the basis of Variables using select() Function
+
+```{r selecting_variables, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(tidyverse)
+# df <- df[,-c(1,2,3)]
+# select(df, "Gender" , "Education Status") %>% head()
+
+df_1 <- select(df, 'Gender', 
+        'Education Status', 
+        'Occupation type', 
+        'Socioeconomic Status',
+        'Name of District', 
+        'Name of Tehsil', 
+        'Living Area', 
+        'Based on your observations, how would you rank the ticks in the matter of frequency', 
+       'In which host you have observed ticks?',
+        'If it was animal host then select the host species in which ticks were observed',
+        'Animal Gender', 
+        'Health Status of animal in which ticks are observed (select all possible)', 
+        'What is your level of knowledge about ticks?', 
+        'How frequently you observe the ticks?', 
+        'Did you find any impact of these ticks on animal health?', 
+        'What is the average number of ticks you have observed last year?', 
+        'Hygienic Measures of the area (select all possible)',
+        'How frequently you have observed theileriosis in your animals?',
+        'How frequently you have observed babesiosis in animals?') 
+
+head(df)
+```
+
+
+# Renaming Data Columns with rename() Function
+
+```{r renaming_col, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(tidyverse)
+df_1 <- df_1 %>% rename("gender" = "Gender", 
+                "educational_status" = "Education Status",
+                "ocupation_type" = "Occupation type",
+                "sec" = "Socioeconomic Status",
+                "dist_name" = "Name of District",
+                "tehsil_name" = "Name of Tehsil", 
+                "living_area" = "Living Area",
+                "tick_freq" = "Based on your observations, how would you rank the ticks in the matter of frequency",
+                "host_animal" = "In which host you have observed ticks?" ,
+                "host_specie" = "If it was animal host then select the host species in which ticks were observed", 
+                "animal_gender" = "Animal Gender", 
+                "host_health" =  "Health Status of animal in which ticks are observed (select all possible)",
+                "knowledge" = "What is your level of knowledge about ticks?", 
+                "obs_freq" = "How frequently you observe the ticks?", 
+                "impact_ani_health" = "Did you find any impact of these ticks on animal health?", 
+                "ave_tick_ly" = "What is the average number of ticks you have observed last year?",
+                "hm" = "Hygienic Measures of the area (select all possible)" , 
+                "theileriosis_freq"= "How frequently you have observed theileriosis in your animals?", 
+                "babesiosis_freq" =  "How frequently you have observed babesiosis in animals?") %>% print()
+```
+
+# Recoding Data Columns with mutate() & recode() Functions
+
+```{r recod_var, message=FALSE, warning=FALSE, paged.print=FALSE}
+df_1 %>%  
+  mutate(dist_name = recode(dist_name, "Rajan pur"= "Rajanpur" , "Rajan 6" = "Rajanpur", "faisalabad" = "Faisalabad", "Fsd" = "Faisalabad"  )  ) %>% 
+  drop_na(dist_name) %>% 
+  summarise(unique(dist_name))
+
+
+
+
+df_1 <- df_1 %>%  
+  mutate(dist_name = recode(dist_name, "Rajan pur"= "Rajanpur" , "Rajan 6" = "Rajanpur", "faisalabad" = "Faisalabad", "Fsd" = "Faisalabad"  )  ) %>% 
+  drop_na(dist_name) 
+```
+
+
+# Subsetting Data on the basis of Rows using filter() Function
+
+```{r filtering_rows, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(tidyverse)
+glimpse(df_1)
+filter(df_1, dist_name == "Rajanpur" | dist_name == "Rajan pur" ) %>% 
+  print()
+
+filter(df_1, dist_name %in% c("Rajanpur","Rajan pur", "Rajan 6" )) %>%  
+  print()
+
+
+```
+
+
+# Re-Transformation of Data 
+
+```{r pivot_longer, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(tidyverse)
+
+
+
+ df_test <- df %>% select(., 'Timestamp', 
+              'Gender', 
+        'Education Status', 
+        'Occupation type', 
+        'Socioeconomic Status',
+        'Name of District', 
+        'Name of Tehsil', 
+        'Living Area', 
+        'Based on your observations, how would you rank the ticks in the matter of frequency', 
+       'In which host you have observed ticks?',
+        'If it was animal host then select the host species in which ticks were observed',
+        'Animal Gender', 
+        'Health Status of animal in which ticks are observed (select all possible)', 
+        'What is your level of knowledge about ticks?', 
+        'How frequently you observe the ticks?', 
+        'Did you find any impact of these ticks on animal health?', 
+        'What is the average number of ticks you have observed last year?', 
+        'Hygienic Measures of the area (select all possible)',
+        'How frequently you have observed theileriosis in your animals?',
+        'How frequently you have observed babesiosis in animals?')  %>%  rename("date"= "Timestamp",
+                                                                                "gender" = "Gender", 
+                "educational_status" = "Education Status",
+                "ocupation_type" = "Occupation type",
+                "sec" = "Socioeconomic Status",
+                "dist_name" = "Name of District",
+                "tehsil_name" = "Name of Tehsil", 
+                "living_area" = "Living Area",
+                "tick_freq" = "Based on your observations, how would you rank the ticks in the matter of frequency",
+                "host_animal" = "In which host you have observed ticks?" ,
+                "host_specie" = "If it was animal host then select the host species in which ticks were observed", 
+                "animal_gender" = "Animal Gender", 
+                "host_health" =  "Health Status of animal in which ticks are observed (select all possible)",
+                "knowledge" = "What is your level of knowledge about ticks?", 
+                "obs_freq" = "How frequently you observe the ticks?", 
+                "impact_ani_health" = "Did you find any impact of these ticks on animal health?", 
+                "ave_tick_ly" = "What is the average number of ticks you have observed last year?",
+                "hm" = "Hygienic Measures of the area (select all possible)" , 
+                "theileriosis_freq"= "How frequently you have observed theileriosis in your animals?", 
+                "babesiosis_freq" =  "How frequently you have observed babesiosis in animals?") %>% 
+  mutate(dist_name = recode(dist_name, "Rajan pur"= "Rajanpur" , "Rajan 6" = "Rajanpur", "faisalabad" = "Faisalabad", "Fsd" = "Faisalabad"  )  )
+ 
+ 
+ #  %>% pivot_longer(cols=c("theileriosis_freq","babesiosis_freq"), names_to="observation", values_to = "frequency")
+ 
+```
+
+
+# Changing Nature of a variable from "dttm" to "date"
+
+```{r dttm_to_date, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(tidyverse)
+
+# df$Timestamp <- as.POSIXct(df$Timestamp)
+
+df_test$date <- as.Date(df_test$date)
+```
+
+
+```{r str_df_test, message=FALSE, warning=FALSE, paged.print=FALSE}
+str(df_test)
+```
+
+
+# Statistical Analysis of Data
+
+```{r summary_df_test, message=FALSE, warning=FALSE, paged.print=FALSE}
+summary(df_test)
+```
+
+## Distribution of Data Variables
+
+Example to understand a "for loop" making histograms
+
+```{r normality_check, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+
+set.seed(123) # For reproducibility
+df <- data.frame(
+  var1 = rnorm(100, mean = 50, sd = 10),
+  var2 = rnorm(100, mean = 30, sd = 5),
+  var3 = rnorm(100, mean = 70, sd = 15)
+)
+
+
+for (col in names(df)) {
+  # Generate histogram
+  hist(df[[col]], main = paste("Histogram of", col), xlab = col, col = "skyblue", border = "white")
+}
+
+
+```
+
+*Normality of "tick_freq"*
+
+```{r normality_check_2, message=FALSE, warning=FALSE, paged.print=FALSE}
+hist(df_test$tick_freq, xlab = "Frequency of Ticks", col = "red", border = "orange")
+
+
+# qqnorm(df_test$tick_freq, main = "QQ Plot of Frquency of Ticks", pch = 19, col = "blue", cex = 1.2, xlab = "Theoretical Quantiles", ylab = "Sample Quantiles") 
+
+
+shapiro.test(df_test$tick_freq)
+
+# data shows abnormal distribution in each test 
+# sqrt() transformation of data 
+
+#df_log <- df_test %>%
+  #mutate(
+   # log_tick_freq = log(tick_freq)
+ # )
+
+# shapiro.test(df_log$log_tick_freq)
+# hist(df_log$log_tick_freq,xlab = "Frequency of Ticks", col = "red", border = "orange" )
+remove(df_log)
+```
+
+
+## Composition of Data Variable 
+
+```{r comp_check, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(tidyverse)
+library(car)
+
+leveneTest(df_test$tick_freq ~ df_test$dist_name , data = df_test)
+
+```
+```{r comp_check_2, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(tidyverse)
+library(car)
+
+leveneTest(df_test$tick_freq ~ df_test$sec , )
+```
+
+
+```{r comp_check_3, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+
+library(tidyverse)
+library(car)
+
+leveneTest(df_test$tick_freq ~ df_test$living_area)
+```
+```{r comp_check_4, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(tidyverse)
+library(car)
+
+leveneTest(df_test$tick_freq ~ df_test$impact_ani_health)
+
+leveneTest(df_test$tick_freq ~ df_test$gender)
+
+leveneTest(df_test$tick_freq ~ df_test$educational_status)
+
+leveneTest(df_test$tick_freq ~ df_test$tehsil_name)
+
+leveneTest(df_test$tick_freq ~ df_test$host_animal)
+
+leveneTest(df_test$tick_freq ~ df_test$host_specie)
+
+leveneTest(df_test$tick_freq ~ df_test$animal_gender)
+
+leveneTest(df_test$tick_freq ~ df_test$host_health)
+
+leveneTest(df_test$tick_freq ~ df_test$knowledge)
+
+leveneTest(df_test$tick_freq ~ df_test$obs_freq)
+
+leveneTest(df_test$tick_freq ~ df_test$ave_tick_ly)
+
+leveneTest(df_test$tick_freq ~ df_test$hm)
+
+leveneTest(df_test$tick_freq ~ df_test$theileriosis_freq)
+
+leveneTest(df_test$tick_freq ~ df_test$babesiosis_freq)
+
+
+```
+
+## Relationship between Data Variables 
+
+```{r recoding_into_numbers, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(tidyverse)
+
+
+# recoding columns for better analysis
+ #df_recode <- df_test %>%
+  filter(!is.na(df_test$theileriosis_freq)) %>%  
+  mutate(theileriosis_freq = recode(theileriosis_freq,
+                                    "1" = "Less frequent",
+                                    "2" =  "Seldom",
+                                    "3" = "Highly frequent"))
+
+
+ #df_recode <- df_recode %>%
+  filter(!is.na(babesiosis_freq)) %>%  
+  mutate(babesiosis_freq = recode(babesiosis_freq,
+                                    1 = "Less frequent",
+                                    2 =  "Seldom",
+                                    3 = "Highly frequent"))
+ 
+ 
+ 
+ # df_recode <- df_recode %>%
+  filter(!is.na(ave_tick_ly)) %>%  
+  mutate(ave_tick_ly = recode(ave_tick_ly,
+                                    "Above 50" = "50-60",
+                                    "up to 10" = "1-10"))
+  
+  
+  
+ df_recode <-  df_recode %>% 
+  separate(ave_tick_ly , into=c("min", "max"), sep="-", convert=TRUE) %>%
+	mutate(midpoint = (min+max)/2)
+
+    
+library(ggplot2)
+
+ggplot(df_recode) +
+ aes(x = theileriosis_freq, y = babesiosis_freq, fill = tick_freq) +
+ geom_tile() +
+ scale_fill_distiller(palette = "YlOrRd", direction = 1) +
+ theme_minimal() +
+ facet_wrap(vars(dist_name))
+
+ 
+```
+
+Filtering data to get rows of  "Narowal" , "Rajanpur" , and "Toba Tek Singh".
+
+```{r subsetting_three_dist, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(tidyverse)
+
+df_recode <-   df_recode %>% filter(dist_name %in% c("Rajanpur","Narowal", "Toba Tek Singh" ))
+
+```
+
+
+Making visualization to show the relationship between the variables. 
+
+```{r relationship_plotting, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(readxl)
+library(tidyverse)
+library(ggplot2)
+
+
+library(ggplot2)
+
+ggplot(df_recode) +
+ aes(x = sec, fill = educational_status) +
+ geom_bar() +
+ scale_fill_viridis_d(option = "viridis", 
+ direction = 1) +
+ labs(x = "Socio Economic Status") +
+ coord_polar(theta = "y") +
+ theme_minimal() +
+ facet_wrap(vars(dist_name))
+
+library(ggplot2)
+
+ggplot(df_recode) +
+ aes(x = living_area, fill = hm) +
+ geom_bar() +
+ scale_fill_brewer(palette = "Paired", 
+ direction = 1) +
+ theme_classic() +
+ theme(legend.position = "none", axis.text.y = element_text(size = 14L, 
+ vjust = 0.1), axis.text.x = element_text(size = 14L, angle = 45L, hjust = 0.9)) +
+ facet_wrap(vars(dist_name))
+
+ggplot(df_recode) +
+ aes(x = living_area, fill = hm) +
+ geom_bar() +
+ scale_fill_brewer(palette = "Paired", 
+ direction = 1) +
+ labs(x = "Living Area", y = "Counts") +
+ theme_classic() +
+ theme(legend.position = "none", 
+ axis.title.y = element_text(size = 16L), axis.title.x = element_text(size = 16L, hjust = 1), axis.text.y = element_text(size = 14L, 
+ vjust = 0.1), axis.text.x = element_text(size = 14L, angle = 45L, hjust = 0.9)) +
+ facet_wrap(vars(dist_name))
+
+
+
+
+
+
+```
+
+
+
+
+
+```{r relationship_plotting_2, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(readxl)
+library(tidyverse)
+library(ggplot2)
+#library(esquisse)
+
+#esquisser()
+
+ggplot(df_recode) +
+  aes(
+    x = theileriosis_freq,
+    y = babesiosis_freq,
+    fill = tick_freq
+  ) +
+  geom_tile() +
+  scale_fill_distiller(palette = "YlOrRd", direction = 1) +
+  theme_minimal() +
+  facet_wrap(vars(dist_name))
+
+
+
+```
+
+
+

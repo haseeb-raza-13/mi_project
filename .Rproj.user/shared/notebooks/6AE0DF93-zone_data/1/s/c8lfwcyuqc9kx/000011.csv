@@ -1,0 +1,8 @@
+"0","library(tidyverse)"
+"0","zone_data <- zone_data %>% "
+"0","  rename(""total_number"" = ""numb_ani_herd"", "
+"0","         ""total_young_stock"" = ""young_stock"", "
+"0","         ""male"" = ""male_young_stock"", "
+"0","         ""female"" = ""female_young_stock"", "
+"0","         ) %>% "
+"0","  pivot_longer(cols = c(male, female), names_to = ""stock_gender"", values_to = ""number_of_stock"") "

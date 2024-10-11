@@ -1,0 +1,6 @@
+"0","library(readxl)"
+"0","zone_raw_data <-  read_excel(""zone wise data 10-12-2023.xlsx"", "
+"0","    sheet = ""zone wise general sheet"", range = ""A5:FI54"")"
+"0","View(zone_raw_data)"
+"0",""
+"0",""

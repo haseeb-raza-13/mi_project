@@ -1,0 +1,5 @@
+"0","library(tidyverse)"
+"0"," zone_data <- zone_data %>% "
+"0","  filter(farm_location %in% c(""Faislabad"",""BWP"",""Rawalpindi"",""Hafizabad"",  ""Vehari"" ) ) %>% "
+"0","  mutate(farm_location = recode( farm_location, ""Faislabad"" = ""Faisalabad"", "
+"0","                                ""BWP"" = ""Bahawalpur"")) "

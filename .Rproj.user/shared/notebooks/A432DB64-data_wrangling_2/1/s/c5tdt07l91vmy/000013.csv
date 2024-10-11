@@ -1,0 +1,15 @@
+"0",""
+"0","tidy_auction_data %>%"
+"0","	filter(classes == ""small"" | classes == ""medium"" | classes == ""large"" | classes == ""extra_large"") %>%"
+"0","	ggplot(aes(x=date, y=midpoint, color=classes))  + "
+"0","  geom_smooth(span=0.1, se=FALSE) +"
+"0","		labs(title=""Small lambs have the highest price, but\nall lambs peak in Spring"","
+"0","			x=""Date"","
+"0","			y=""Price ($/100 lbs)"","
+"0","			caption=""Data from United Producers in Manchester, MI"") +"
+"0","		theme_light()"
+"1","[38;5;255m`geom_smooth()` using method = 'loess' and formula = 'y ~ x'[39m
+"
+"2","Warning:"
+"2"," [38;5;255mRemoved 325 rows containing non-finite outside the scale range (`stat_smooth()`).[39m
+"

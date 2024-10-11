@@ -1,0 +1,21 @@
+"0","library(tidyverse)"
+"0",""
+"0","large_prices %>%"
+"0","	mutate(mid_point = (min + max) / 2) %>%"
+"0","	ggplot(aes(x=date, y=mid_point)) +"
+"0","		geom_line(color=""steelblue"") +"
+"0","		geom_smooth(span=0.1, se=FALSE, col = ""#2234CA"") +"
+"0","		labs(title=""Large lambs have their\nhighest value in April and May"","
+"0","			subtitle=""Prices for lambs between 106 and 130 pounds"","
+"0","			caption=""Data as reported by United Producers in Manchester, MI"","
+"0","			x=""Date"","
+"0","			y=""Price ($/100 lbs)"") +"
+"0","		theme_light()"
+"1","[38;5;255m`geom_smooth()` using method = 'loess' and formula = 'y ~ x'[39m
+"
+"2","Warning:"
+"2"," [38;5;255mRemoved 61 rows containing non-finite outside the scale range (`stat_smooth()`).[39m
+"
+"2","Warning:"
+"2"," [38;5;255mRemoved 47 rows containing missing values or values outside the scale range (`geom_line()`).[39m
+"

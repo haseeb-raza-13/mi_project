@@ -1,0 +1,8 @@
+"0","library(tidyverse)"
+"0","tidy_auction_data %>%"
+"0","	filter(classes==""large"") %>%"
+"0","	mutate(lag0 = midpoint,"
+"0","		lag1 = lag(midpoint, 1, order_by=date),"
+"0","		lag2 = lag(midpoint, 2, order_by=date),"
+"0","		lag3 = lag(midpoint, 3, order_by=date)) %>%"
+"0","	mutate(rolling_average = mean(c(lag0, lag1, lag2, lag3)))"

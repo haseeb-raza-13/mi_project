@@ -1,0 +1,182 @@
+library(tidyverse)
+library(googlesheets4)
+
+auction_data <- read_sheet("https://docs.google.com/spreadsheets/d/1_quMjJRBHDLQSmWQouzzyi1DOejAtCZnAeesdVyRWiQ/edit#gid=1467293328",
+			sheet="numbers_and_prices",
+			range="A:J",
+			col_type = "Ddcccccccc",
+			na="NA") %>%
+		rename_all(tolower) %>%
+		rename("aged_sheep" = "aged sheep",
+			"feeder_lambs" = "feeder lambs",
+			"hair_lambs" = "hair lambs",
+			"new_crop" = "new crop",
+			"small" = "40-85",
+			"medium" = "85-105",
+			"large" = "106-130",
+			"extra_large" = ">131")
+
+
+tidy_auction_data <- auction_data %>%
+	pivot_longer(cols=-c("date", "total"), names_to="classes", values_to = "price_range") %>%
+	separate(price_range, into=c("min", "max"), sep="-", convert=TRUE) %>%
+	mutate(midpoint = (min+max)/2)
+
+
+x <- 1:10
+
+lag(x) # the default lag is 1
+lag(x, n=1)
+lag(x, n=2)
+lag(x, n=3)
+
+
+
+tidy_auction_data %>%
+	filter(classes=="large") %>%
+	mutate(lag0 = midpoint,
+		lag1 = lag(midpoint, 1, order_by=date))
+
+
+
+tidy_auction_data %>%
+	filter(classes=="large") %>%
+	mutate(lag0 = midpoint,
+		lag1 = lag(midpoint, 1, order_by=date),
+		lag2 = lag(midpoint, 2, order_by=date),
+		lag3 = lag(midpoint, 3, order_by=date))
+
+
+
+tidy_auction_data %>%
+	filter(classes=="large") %>%
+	mutate(lag0 = midpoint,
+		lag1 = lag(midpoint, 1, order_by=date),
+		lag2 = lag(midpoint, 2, order_by=date),
+		lag3 = lag(midpoint, 3, order_by=date)) %>%
+	mutate(rolling_average = mean(c(lag0, lag1, lag2, lag3)))
+
+
+
+tidy_auction_data %>%
+	filter(classes=="large") %>%
+	mutate(lag0 = midpoint,
+		lag1 = lag(midpoint, 1, order_by=date),
+		lag2 = lag(midpoint, 2, order_by=date),
+		lag3 = lag(midpoint, 3, order_by=date)) %>%
+	group_by(date) %>%
+	summarize(midpoint = first(midpoint), rolling_average = mean(c(lag0, lag1, lag2, lag3)))
+
+
+
+large <- tidy_auction_data %>%
+	filter(classes=="large") %>%
+	mutate(lag0 = midpoint,
+		lag1 = lag(midpoint, 1, order_by=date),
+		lag2 = lag(midpoint, 2, order_by=date),
+		lag3 = lag(midpoint, 3, order_by=date)) %>%
+	mutate(rolling_average = (lag0 + lag1 + lag2 + lag3)/4) %>%
+	select(date, midpoint, rolling_average)
+
+
+
+
+
+large %>%
+	pivot_longer(-date, names_to="method", values_to="price")
+
+
+
+large %>%
+	pivot_longer(-date, names_to="method", values_to="price") %>%
+	ggplot(aes(x=date, y=price, color=method)) +
+		geom_line()
+
+
+
+
+large %>%
+	pivot_longer(-date, names_to="method", values_to="price") %>%
+	ggplot(aes(x=date, y=price, color=method)) +
+		geom_line() +
+		theme_light() +
+		labs(x="Date",
+			y="Price ($/100 lbs)",
+			title="A rolling average smooths the noisiness of the large lamb prices",
+			subtitle="Lagging four week rolling average of the midpoint prices",
+			caption="Prices as reported from United Producers in Manchester, MI")
+
+
+
+
+
+large %>%
+	pivot_longer(-date, names_to="method", values_to="price") %>%
+	ggplot(aes(x=date, y=price, color=method)) +
+		geom_line() +
+		theme_light() +
+		labs(x="Date",
+			y="Price ($/100 lbs)",
+			title="A rolling average smooths the noisiness of the large lamb prices",
+			subtitle="Lagging four week rolling average of the midpoint prices",
+			caption="Prices as reported from United Producers in Manchester, MI") +
+		scale_color_manual(values=c("gray", "dodgerblue"))
+
+
+
+
+
+
+large %>%
+	ggplot(aes(x=date, y=midpoint)) +
+		geom_line(color="gray") +
+		geom_smooth(size=0.5, span=0.1, se=FALSE)
+
+# question's answers
+
+large_three <- tidy_auction_data %>%
+	filter(classes=="large") %>%
+	mutate(lag0 = midpoint,
+				 lag1 = lag(midpoint, 1, order_by=date),
+				 lag2 = lag(midpoint, 2, order_by=date)) %>%
+	mutate(rolling_average = (lag0 + lag1 + lag2)/3) %>%
+	select(date, midpoint, rolling_average)
+or
+
+large_five <- tidy_auction_data %>%
+	filter(classes=="large") %>%
+	mutate(lag0 = midpoint,
+				 lag1 = lag(midpoint, 1, order_by=date),
+				 lag2 = lag(midpoint, 2, order_by=date),
+				 lag3 = lag(midpoint, 3, order_by=date),
+				 lag4 = lag(midpoint, 4, order_by=date)) %>%
+	mutate(rolling_average = (lag0 + lag1 + lag2 + lag3 + lag4)/5) %>%
+	select(date, midpoint, rolling_average)
+
+
+
+
+#2
+rolling <- tidy_auction_data %>%
+	group_by(classes) %>%
+		mutate(lag0 = midpoint,
+				 lag1 = lag(midpoint, 1, order_by=date),
+				 lag2 = lag(midpoint, 2, order_by=date),
+				 lag3 = lag(midpoint, 3, order_by=date)) %>%
+	mutate(rolling_average = (lag0 + lag1 + lag2 + lag3)/4) %>%
+	select(date, classes, midpoint, rolling_average)
+
+rolling %>%
+	filter(classes=="small" | classes=="medium" | classes=="large" | classes=="extra_large") %>%
+	ggplot(aes(x=date, y=rolling_average, color=classes)) + geom_line()
+
+
+#3
+library(zoo)
+
+tidy_auction_data %>%
+	filter(classes=="large") %>%
+	mutate(rolling_average = rollmean(midpoint, 4, na.pad=TRUE, align="right")) %>%
+	select(date, midpoint, rolling_average)
+
+

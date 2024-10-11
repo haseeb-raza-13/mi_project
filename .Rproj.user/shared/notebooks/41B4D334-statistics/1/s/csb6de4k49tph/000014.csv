@@ -1,0 +1,7 @@
+"0",""
+"0",""
+"0","ggplot(data=iris, aes(x=Petal.Length, y=Petal.Width)) +"
+"0","  geom_abline(col=2) + geom_point(size=3, col=""blue"") +"
+"0","  geom_smooth(se=FALSE, col=""green"", span=10) + theme_classic()"
+"1","[38;5;255m`geom_smooth()` using method = 'loess' and formula = 'y ~ x'[39m
+"

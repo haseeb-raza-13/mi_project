@@ -1,0 +1,34 @@
+"0",""
+"0","zone_info_data %>% "
+"0","  mutate( edu_farmer = recode( edu_farmer ,""illeterate"" = ""Illiterate"")) %>% "
+"0","  select(., c(farm_location : pref_breed)) "
+"1","[38;5;246m# A tibble: 34 × 5[39m
+"
+"1","   farm_location zones edu_farmer years_in_business pref_breed          
+"
+"1","   [3m[38;5;246m<chr>[39m[23m         [3m[38;5;246m<dbl>[39m[23m [3m[38;5;246m<chr>[39m[23m                  [3m[38;5;246m<dbl>[39m[23m [3m[38;5;246m<chr>[39m[23m               
+"
+"1","[38;5;250m 1[39m Faisalabad        8 Illiterate                40 Beetal Amratsari    
+"
+"1","[38;5;250m 2[39m Faisalabad        8 Illiterate                30 Beetal, Nagri       
+"
+"1","[38;5;250m 3[39m Faisalabad        8 Matric                     7 Beetal Amratsari    
+"
+"1","[38;5;250m 4[39m Faisalabad        8 Primary                   20 Beetal Amratsari    
+"
+"1","[38;5;250m 5[39m Faisalabad        8 Illiterate                50 Beetal Amratsari    
+"
+"1","[38;5;250m 6[39m Bahawalpur        5 Illiterate                40 Beetal, makhi cheeni
+"
+"1","[38;5;250m 7[39m Bahawalpur        5 Graduation                45 Beetal              
+"
+"1","[38;5;250m 8[39m Bahawalpur        5 Illiterate                40 Beetal Makhi cheeni 
+"
+"1","[38;5;250m 9[39m Bahawalpur        5 Primary                   15 Beetal Makhi cheeni 
+"
+"1","[38;5;250m10[39m Bahawalpur        5 Primary                   12 Beetal Makhi cheeni 
+"
+"1","[38;5;246m# ℹ 24 more rows[39m
+"
+"1","[38;5;246m# ℹ Use `print(n = ...)` to see more rows[39m
+"

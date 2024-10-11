@@ -1,0 +1,77 @@
+library(tidyverse)
+library(googlesheets4)
+
+auction_data <- read_sheet("https://docs.google.com/spreadsheets/d/1_quMjJRBHDLQSmWQouzzyi1DOejAtCZnAeesdVyRWiQ/edit#gid=1467293328",
+		sheet="numbers_and_prices",
+		range="A:J",
+		col_type = "Ddcccccccc",
+		na="NA") %>%
+	rename_all(tolower) %>%
+	rename("aged_sheep" = "aged sheep",
+		"feeder_lambs" = "feeder lambs",
+		"hair_lambs" = "hair lambs",
+		"new_crop" = "new crop",
+		"small" = "40-85",
+		"medium" = "85-105",
+		"large" = "106-130",
+		"extra_large" = ">131")
+
+
+large_prices <- auction_data %>%
+	separate(large, sep="-", into=c("min", "max"), convert=TRUE) %>%
+	select(date, min, max)
+
+arge_prices %>%
+	mutate(mid_point = (min + max) / 2) %>%
+	ggplot(aes(x=date, y=mid_point)) +
+		geom_line(color="gray") +
+		geom_smooth(span=0.1, se=FALSE) +
+		labs(title="Large lambs have their highest value in April and May",
+			subtitle="Prices for lambs between 106 and 130 pounds",
+			caption="Data as reported by United Producers in Manchester, MI",
+			x="Date",
+			y="Price ($/100 lbs)") +
+		theme_light()
+
+auction_data %>%
+	pivot_longer(cols = c(small, medium, large, extra_large), names_to="classes", values_to="price_range")
+
+
+
+
+
+auction_data %>%
+	pivot_longer(cols = -c(date, total), names_to="classes", values_to="price_range")
+
+tidy_auction_data <- auction_data %>%
+	pivot_longer(cols = -c(date, total), names_to="classes", values_to="price_range") %>%
+	separate(price_range, sep="-", into=c("min", "max"), convert=TRUE) %>%
+	mutate(midpoint = (min + max) / 2)
+
+
+tidy_auction_data %>%
+	ggplot(aes(x=date, y=midpoint, color=classes)) +
+		geom_line()
+
+tidy_auction_data %>%
+	filter(classes == "small" | classes == "medium" | classes == "large" | classes == "extra_large") %>%
+	ggplot(aes(x=date, y=midpoint, color=classes)) +
+		geom_line()
+
+
+tidy_auction_data %>%
+	filter(classes == "small" | classes == "medium" | classes == "large" | classes == "extra_large") %>%
+	ggplot(aes(x=date, y=midpoint, color=classes)) +
+		geom_line() +
+		labs(title="Small lambs have the highest price, but\nall lambs peak in Spring",
+			x="Date",
+			y="Price ($/100 lbs)",
+			caption="Data from United Producers in Manchester, MI") +
+		theme_light()
+
+
+
+
+
+
+
